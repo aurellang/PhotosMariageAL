@@ -93,7 +93,23 @@ function postJsonWithProgress(url, payload, onProgress) {
     const xhr = new XMLHttpRequest();
 
     xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "text/plain;charset=utf-8");
+
+    xhr.onload = () => {
+      console.log("Status:", xhr.status);
+      console.log("Response:", xhr.responseText);
+
+      try {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      } catch {
+        reject(new Error("Réponse serveur invalide : " + xhr.responseText));
+      }
+    };
+
+    xhr.onerror = () => {
+      console.error("XHR error", xhr);
+      reject(new Error("Erreur réseau ou CORS."));
+    };
 
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) {
@@ -101,21 +117,6 @@ function postJsonWithProgress(url, payload, onProgress) {
       }
     };
 
-    xhr.onload = () => {
-      try {
-        const response = JSON.parse(xhr.responseText);
-
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(response);
-        } else {
-          reject(new Error(response.message || `HTTP ${xhr.status}`));
-        }
-      } catch {
-        reject(new Error("Réponse serveur invalide."));
-      }
-    };
-
-    xhr.onerror = () => reject(new Error("Erreur réseau."));
     xhr.send(JSON.stringify(payload));
   });
 }
