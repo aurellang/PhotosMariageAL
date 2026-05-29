@@ -88,37 +88,23 @@ async function uploadFileWithFallback(file, onProgress) {
   throw lastError || new Error("Tous les comptes Drive ont échoué.");
 }
 
-function postJsonWithProgress(url, payload, onProgress) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
+async function postJsonWithProgress(url, payload, onProgress) {
+  onProgress(20);
 
-    xhr.open("POST", url, true);
-
-    xhr.onload = () => {
-      console.log("Status:", xhr.status);
-      console.log("Response:", xhr.responseText);
-
-      try {
-        const response = JSON.parse(xhr.responseText);
-        resolve(response);
-      } catch {
-        reject(new Error("Réponse serveur invalide : " + xhr.responseText));
-      }
-    };
-
-    xhr.onerror = () => {
-      console.error("XHR error", xhr);
-      reject(new Error("Erreur réseau ou CORS."));
-    };
-
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) {
-        onProgress(Math.round((event.loaded / event.total) * 100));
-      }
-    };
-
-    xhr.send(JSON.stringify(payload));
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(payload)
   });
+
+  onProgress(90);
+
+  const text = await response.text();
+  console.log("Réponse Apps Script :", text);
+
+  const json = JSON.parse(text);
+
+  onProgress(100);
+  return json;
 }
 
 function fileToBase64(file) {
