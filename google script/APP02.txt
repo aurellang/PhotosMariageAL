@@ -1,0 +1,68 @@
+const FOLDER_ID = "1vHSkeauQxzFiHXDyGEqN7Cnsm3Xfvq1p";
+const MIN_FREE_BYTES = 100 * 1024 * 1024; // 100 Mo de marge
+
+function doPost(e) {
+  try {
+    const payload = JSON.parse(e.postData.contents);
+
+    if (!payload.name || !payload.type || !payload.data || !payload.size) {
+      return jsonResponse({
+        success: false,
+        code: "BAD_REQUEST",
+        message: "Données incomplètes."
+      });
+    }
+
+    const limit = DriveApp.getStorageLimit();
+    const used = DriveApp.getStorageUsed();
+    const free = limit - used;
+
+    if (free < payload.size + MIN_FREE_BYTES) {
+      return jsonResponse({
+        success: false,
+        code: "DRIVE_FULL",
+        message: "Espace Drive insuffisant."
+      });
+    }
+
+    const safeName = makeSafeFileName(payload.name);
+
+    const blob = Utilities.newBlob(
+      Utilities.base64Decode(payload.data),
+      payload.type,
+      safeName
+    );
+
+    const folder = DriveApp.getFolderById(FOLDER_ID);
+    const file = folder.createFile(blob);
+
+    return jsonResponse({
+      success: true,
+      fileId: file.getId(),
+      fileName: file.getName()
+    });
+
+  } catch (error) {
+    return jsonResponse({
+      success: false,
+      code: "SERVER_ERROR",
+      message: error.message
+    });
+  }
+}
+
+function jsonResponse(data) {
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function makeSafeFileName(name) {
+  const timestamp = Utilities.formatDate(
+    new Date(),
+    Session.getScriptTimeZone(),
+    "yyyyMMdd-HHmmss"
+  );
+
+  return `${timestamp}-${name}`.replace(/[\\/:*?"<>|]/g, "_");
+}
