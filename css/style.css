@@ -86,3 +86,45 @@ progress {
   margin: 12px 0 0 0;
   font-weight: bold;
 }
+
+.menu-card h1 {
+  margin-bottom: 24px;
+}
+
+.menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 64px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #111;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.menu-button.primary {
+  background: linear-gradient(180deg, #f6d365 0%, #d4af37 100%);
+}
+
+.back-button {
+  margin-top: 22px;
+}
+
+.placeholder-text {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.4;
+  text-align: center;
+  font-weight: bold;
+}
