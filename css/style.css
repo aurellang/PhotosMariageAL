@@ -24,28 +24,23 @@ body {
 .page-hero {
   position: relative;
   width: 100%;
-  min-height: 118px;
-  height: 16svh;
-  max-height: 145px;
+  min-height: 128px;
+  height: 20svh;
+  max-height: 155px;
   background: #0d0d0d;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 76px;
+  padding: 12px 82px;
   overflow: hidden;
   flex: 0 0 auto;
 }
 
-.placeholder-hero {
+.placeholder-hero,
+.upload-hero {
   min-height: 128px;
   height: 20svh;
   max-height: 155px;
-}
-
-.upload-hero {
-  min-height: 118px;
-  height: 16svh;
-  max-height: 145px;
 }
 
 .page-hero::before,
@@ -100,8 +95,9 @@ body {
 
 .wedding-title strong {
   margin-top: 5px;
-  font-size: clamp(30px, 8.8vw, 44px);
+  font-size: clamp(27px, 7.2vw, 38px);
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .logo {
@@ -222,15 +218,13 @@ progress {
 }
 
 @media (max-height: 720px) {
-  .page-hero {
-    min-height: 96px;
-    height: 15svh;
-    padding: 8px 66px;
-  }
-
-  .placeholder-hero {
+  .page-hero,
+  .placeholder-hero,
+  .upload-hero {
     min-height: 110px;
     height: 18svh;
+    max-height: 130px;
+    padding: 8px 72px;
   }
 
   .page-hero::before,
@@ -239,11 +233,11 @@ progress {
   }
 
   .wedding-title span {
-    font-size: clamp(21px, 6.5vw, 30px);
+    font-size: clamp(20px, 6vw, 28px);
   }
 
   .wedding-title strong {
-    font-size: clamp(27px, 8vw, 38px);
+    font-size: clamp(25px, 7vw, 34px);
   }
 
   .logo {
@@ -279,14 +273,20 @@ progress {
 }
 
 @media (max-width: 380px) {
-  .page-hero {
-    padding-left: 58px;
-    padding-right: 58px;
+  .page-hero,
+  .placeholder-hero,
+  .upload-hero {
+    padding-left: 60px;
+    padding-right: 60px;
   }
 
   .page-hero::before,
   .page-hero::after {
     width: 86px;
+  }
+
+  .wedding-title strong {
+    font-size: clamp(23px, 6.7vw, 31px);
   }
 
   .card {
