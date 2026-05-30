@@ -7,16 +7,30 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <img src="img/wallas.png" alt="Wallas" class="logo">
+
+  <header class="page-hero upload-hero">
+    <div class="wedding-title">
+      <span>Mariage de</span>
+      <strong>Laëtitia et Aurélien</strong>
+    </div>
+  </header>
+
+  <img src="img/Wallas.png" alt="Wallas" class="logo">
+
   <main class="card">
-    <h1>Mariage de Laëtitia et Aurélien</h1>
     <input id="photos" type="file" accept="image/*" multiple hidden>
+
     <button id="selectBtn">Ajouter les photos</button>
     <button id="uploadBtn" disabled>Envoyer</button>
+
     <p id="fileInfo">Veuillez sélectionner une photo</p>
+
     <progress id="progress" value="0" max="100"></progress>
     <p id="message"></p>
+
+    <a class="menu-button menu-return-button" href="index.html">Menu</a>
   </main>
+
   <script src="js/config.js"></script>
   <script src="js/app.js"></script>
 </body>
