@@ -11,15 +11,15 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 14px;
+  padding: 0;
 }
 
 .logo {
-  width: min(70vw, 240px);
-  max-height: 160px;
-  object-fit: contain;
+  width: 100vw;
+  max-width: 100%;
+  height: auto;
   display: block;
-  margin: 0 auto 22px auto;
+  margin: 0;
 }
 
 .card {
@@ -56,7 +56,7 @@ button {
 
 #uploadBtn {
   background: linear-gradient(180deg, #f6d365 0%, #d4af37 100%);
-  color: white;
+  color: #111;
 }
 
 button:disabled {
@@ -114,7 +114,7 @@ progress {
 }
 
 .menu-button.primary {
-  background: linear-gradient(180deg, #f6d365 0%, #d4af37 100%);
+  background: #111;
 }
 
 .back-button {
